@@ -1,0 +1,6 @@
+Good-Turing 3
+file data/Corpus_Europarl/test.txt: 49821 sentences, 1.23807e+06 words, 3189 OOVs
+0 zeroprobs, logprob= -2.46666e+06 ppl= 83.181 ppl1= 99.4231
+Good-Turing 4
+file data/Corpus_Europarl/test.txt: 49821 sentences, 1.23807e+06 words, 3189 OOVs
+0 zeroprobs, logprob= -2.41278e+06 ppl= 75.5236 ppl1= 89.9194

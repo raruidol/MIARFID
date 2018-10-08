@@ -1,0 +1,4 @@
+PATH=$PATH:$HOME/.local/bin:$HOME/bin:/opt/moses/srilm-1.7.1/bin/i686-m64/
+TRAIN="data/Corpus_Europarl/training_full.txt"
+TEST="data/Corpus_Europarl/test.txt"
+VOCAB="data/Corpus_Europarl/training_full_voca_freq10+.txt"

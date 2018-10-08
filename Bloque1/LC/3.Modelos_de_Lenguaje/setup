@@ -1,0 +1,3 @@
+PATH=$PATH:$HOME/.local/bin:$HOME/bin:/opt/moses/srilm-1.7.1/bin/i686-m64/
+TRAIN="data/dihana.entrenamiento1.txt"
+TEST="data/dihana.prueba1.txt"

@@ -1,0 +1,12 @@
+Witten-Bell
+file data/dihana.prueba1.txt: 1208 sentences, 8860 words, 58 OOVs
+0 zeroprobs, logprob= -10288.9 ppl= 10.6626 ppl1= 14.7547
+Modified Kneser-Ney
+file data/dihana.prueba1.txt: 1208 sentences, 8860 words, 58 OOVs
+0 zeroprobs, logprob= -10156.8 ppl= 10.3434 ppl1= 14.2533
+Witten-Bell
+file data/dihana.prueba1.txt: 1208 sentences, 8860 words, 58 OOVs
+0 zeroprobs, logprob= -10276.9 ppl= 10.6331 ppl1= 14.7082
+Modified Kneser-Ney
+file data/dihana.prueba1.txt: 1208 sentences, 8860 words, 58 OOVs
+0 zeroprobs, logprob= -10094.9 ppl= 10.1973 ppl1= 14.0246

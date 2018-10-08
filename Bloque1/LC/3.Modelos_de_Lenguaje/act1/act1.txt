@@ -1,0 +1,10 @@
+file data/dihana.prueba1.txt: 1208 sentences, 8860 words, 58 OOVs
+0 zeroprobs, logprob= -19419 ppl= 87.0877 ppl1= 160.768
+file data/dihana.prueba1.txt: 1208 sentences, 8860 words, 58 OOVs
+0 zeroprobs, logprob= -11161.9 ppl= 13.0338 ppl1= 18.5398
+file data/dihana.prueba1.txt: 1208 sentences, 8860 words, 58 OOVs
+0 zeroprobs, logprob= -10362.4 ppl= 10.8443 ppl1= 15.041
+file data/dihana.prueba1.txt: 1208 sentences, 8860 words, 58 OOVs
+0 zeroprobs, logprob= -10325.4 ppl= 10.7524 ppl1= 14.8961
+file data/dihana.prueba1.txt: 1208 sentences, 8860 words, 58 OOVs
+0 zeroprobs, logprob= -10371 ppl= 10.8659 ppl1= 15.075
