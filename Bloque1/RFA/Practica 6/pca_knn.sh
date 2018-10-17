@@ -15,7 +15,7 @@ for M=[1 5 10 50 100 250 500 1000 1600]
   Z = rows(ter)
   Nc = rows(trr);
   recolabs = zeros(Z, 1);
-  truelabs = te.data(:,end);
+  truelabs = ter(:,end);
 
   for n=1:Z
     dists = zeros(Nc, 1);
