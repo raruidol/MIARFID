@@ -12,7 +12,7 @@ for M=[1 5 10 50 100 250 500 1000 1600]
   A=eigvec(:,1:M); trr=tr(:,1:D)*A; ter=te(:,1:D)*A;
   trr=[trr tr(:,L)]; ter=[ter te(:,L)];
 
-  [auxN, auxL] = size(ter)
+  [auxN, auxL] = size(ter);
   [w, E, k]=perceptron(trr, 1, 100);
   rl=zeros(M,1);
   for z=1:Nte

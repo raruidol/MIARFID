@@ -12,7 +12,7 @@ for M=[1 5 10 50 100 250 500 1000 1600]
   A=eigvec(:,1:M); trr=tr(:,1:D)*A; ter=te(:,1:D)*A;
   trr=[trr tr(:,L)]; ter=[ter te(:,L)];
 
-  Z = rows(ter)
+  Z = rows(ter);
   Nc = rows(trr);
   recolabs = zeros(Z, 1);
   truelabs = ter(:,end);
