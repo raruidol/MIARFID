@@ -1,7 +1,7 @@
 #!/usr/bin/octave -qf
 
-te = load("datos/ocr20x20Te.gz");
-tr = load("datos/ocr20x20Tr.gz");
+te = load("../datos/ocr20x20Te.gz");
+tr = load("../datos/ocr20x20Tr.gz");
 M = rows(te.data);
 Nc = rows(tr.data);
 recolabs = zeros(M, 1);
