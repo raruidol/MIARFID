@@ -12,12 +12,13 @@ for M=[1 5 10 50 100 250 500 1000 1600]
   A=eigvec(:,1:M); trr=tr(:,1:D)*A; ter=te(:,1:D)*A;
   trr=[trr tr(:,L)]; ter=[ter te(:,L)];
 
+  [auxN, auxL] = size(ter)
   [w, E, k]=perceptron(trr, 1, 100);
   rl=zeros(M,1);
-  for m=1:M
-    tem=[1 ter(m,1:D)]';
-    rl(m)=ll(linmach(w,tem)); end
-  [nerr(rep) m]=confus(ter(:,L),rl);
+  for z=1:Nte
+    tem=[1 ter(z,1:M)]';
+    rl(z)=labs(linmach(w,tem)); end
+  [nerr(rep) mat]=confus(ter(:,auxL),rl);
  end
   nerr_mean=mean(100.0*nerr/Nte); nerr_std=std(100.0*nerr/Nte);
   printf("%4d %5.1f %5.1f\n",M,nerr_mean,nerr_std);
