@@ -1,9 +1,12 @@
 import pickle
 import random
 import math
+import numpy as np
 from nltk.tag import hmm
 from nltk.tag import tnt
 import matplotlib.pyplot as plt
+
+random.seed(1)
 
 with open('test', 'rb') as fp:
     test = pickle.load(fp)
@@ -49,7 +52,7 @@ for iter in range(10):
     # Evaluación del etiquetador
     v = tagger_hmm.evaluate(test)
 
-    d = 1.96*math.sqrt((v*(1-v))/len(test))
+    d = 1.96*math.sqrt((v*(1-v))/len(np.array(test).flatten())/2)
     ic = [round(v-d,3),round(v+d, 3)]
 
     listeval.append(round(v, 3))
@@ -63,7 +66,7 @@ va = v/10
 print(listeval)
 print(intervals)
 
-desv = 1.96*math.sqrt((va*(1-va))/len(test))
+desv = 1.96*math.sqrt((va*(1-va))/len(np.array(test).flatten())/2)
 ic = [round(va-desv, 3),round(va+desv, 3)]
 print(round(va, 3))
 print(ic)
