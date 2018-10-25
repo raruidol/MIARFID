@@ -62,6 +62,15 @@ ic = [round(va-desv, 3),round(va+desv, 3)]
 print(round(va, 3))
 print(ic)
 
+'''
+
+va = sum(listeval) / 10
+desv = math.sqrt(1.96*np.var(listeval)/10)
+ic = [round(va-desv, 5),round(va+desv, 5)]
+print(round(va, 5))
+print(ic)
+'''
+
 x = [i for i in range(10)]
 y = listeval
 plt.axis([-1,10,0.75,1])
