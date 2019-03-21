@@ -4,21 +4,20 @@ import io
 with open('entrada_tokenizador.txt', 'r') as f:
 
     #definir regexs
-    regex0 = re.compile(r'(\d{1,2}(:)\d{1,2})'+'|'+'(?:[A-Z]+\.)+')
+    regex0 = re.compile(r'(\d{1,2}(:)\d{1,2})'+'|'+'(?:[A-Z]+\.)')
+
     regex1 = re.compile(r'https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+'+'|'+"\d+\.\d+"+'|'+"\d+\,\d+")
+
     regex_at = re.compile(r'[^@]+@[^@]+\.[^@]+'+'|'+'@+[^@]+'+'|'+'#+[^#]')
+
     regex_fm = re.compile(r'(\d{1,2}(/|-)\d{1,2}((/|-)\d{2,4})?)')
-    regex_compw =re.compile(r'(\w+(-)\w+)')
+
+    regex_compw = re.compile(r'(\w+(-)\w+)')
+
     pre_regex = re.compile(r'(\d{2}\w+\d{4})')
 
-    '''
-    fecha = '(\d+/\d+/\d+)'+'|'+'(\d+-\d+-\d+)'
-    url = 'https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+'
-    decimal = "\d+\.\d+"+'|'+"\d+\,\d+"
-    hora = '^(([01]\d|2[0-3]):([0-5]\d)|24:00)$'
-    mail = '[^@]+@[^@]+\.[^@]+'
-    acro = '(?:(?<=\.|\s)[A-Z]\.)+'
-    '''
+    regex_fecha = re.compile(r'(\d{1,2})(\s+)(\w{2})(\s+)(\w+)(\s+)(\w{2})(\s+)(\d{2,4})')
+
 
     while True:
         line = f.readline()
@@ -26,8 +25,14 @@ with open('entrada_tokenizador.txt', 'r') as f:
         if line == "":
             break
 
+        for item in re.finditer(regex_fecha, line):
+            line = regex_fecha.sub('cxz', line)
+            aux = item.group()
+
         for e in line.split():
-            if regex1.match(e):
+            if e == 'cxz':
+                print(aux)
+            elif regex1.match(e):
                 print(e)
             elif regex_at.match(e):
                 print(e)
@@ -37,6 +42,7 @@ with open('entrada_tokenizador.txt', 'r') as f:
                 print(e)
             elif regex_compw.match(e):
                 print(e)
+
             else:
 
                 regex2 = re.compile('[^#(\w+)]')
