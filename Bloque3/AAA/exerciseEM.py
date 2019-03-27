@@ -2,6 +2,7 @@ import numpy as np
 import scipy as sp
 import seaborn as sns
 from matplotlib import pyplot as plt
+import scipy.stats as ss
 
 
 class GMM(object):
@@ -33,11 +34,11 @@ class GMM(object):
             num_iters += 1
             ll = self.loglikelihood()
             print('Iteration %d: log-likelihood is %.6f' % (num_iters, ll))
-
-            print('Medias: ',self.mean_arr)
-            print('Covarianzas: ', self.sigma_arr)
-            print('Params: ', self.phi)
+        print('Medias: ', self.mean_arr)
+        print('Covarianzas: ', self.sigma_arr)
+        print('Params: ', self.phi)
         print('Terminate at %d-th iteration:log-likelihood is %.6f' % (num_iters, ll))
+        return self.mean_arr, self.sigma_arr, self.phi
 
     def loglikelihood(self):
         ll = 0
@@ -90,30 +91,44 @@ mu1 = 2
 mu2 = 4
 sigma = 2
 variance = 4
-num_muestras = 50
 
+p = np.random.randint(0,100)
+print("Muestras: ", p)
 
-X1 = np.random.multivariate_normal([mu1], [[sigma]], 50)
-X2 = np.random.multivariate_normal([mu2], [[sigma]], 50)
+X1 = np.random.multivariate_normal([mu1], [[sigma]], p)
+X2 = np.random.multivariate_normal([mu2], [[sigma]], (100-p))
 X = np.vstack((X1, X2))
 print(X.shape)
-'''
-count1, bins1, ignored1 = plt.hist(X1, density=True)
-plt.plot(bins1, 1/(sigma * np.sqrt(2 * np.pi)) * np.exp( - (bins1 - mu1)**2 / (2 * sigma**2) ), linewidth=2, color='r')
-
-count2, bins2, ignored2 = plt.hist(X2, density=True)
-plt.plot(bins2, 1/(sigma * np.sqrt(2 * np.pi)) * np.exp( - (bins2 - mu2)**2 / (2 * sigma**2) ), linewidth=2, color='green')
-'''
-
-x = np.linspace(np.min(X), np.max(X), len(X))
 
 # Plot the data to which the GMM is being fitted
 plt.figure()
-plt.plot(X, color='blue')
 
 plt.show()
 
-exit()
 gmm = GMM(X)
-gmm.fit()
+mean_arr, sigma_arr, params = gmm.fit()
+
+n_components = params.shape[0]
+
+print("Num. Mixturas: ",n_components)
+
+# Weight of each component, in this case all of them are 1/3
+weights = np.array([p/100, (100-p)/100])
+print("Pesos(priori): ",weights)
+
+
+# Theoretical PDF plotting -- generate the x and y plotting positions
+xs = np.linspace(X.min(), X.max(), 1000)
+ys = np.zeros_like(xs)
+
+zipped = zip(mean_arr, params, weights)
+
+for l, s, w in zip(mean_arr, params, weights):
+    ys += ss.norm.pdf(xs, loc=l.item(0), scale=s) * w
+
+plt.plot(xs, ys)
+plt.hist(X, density=True, bins="fd")
+plt.xlabel("x")
+plt.ylabel("f(x)")
+plt.show()
 
