@@ -5,6 +5,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import precision_recall_fscore_support
 from sklearn.metrics import accuracy_score
 from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.linear_model import SGDClassifier
+from sklearn import neighbors
 import re
 from nltk.corpus import stopwords
 
@@ -89,12 +91,16 @@ def preprocess(train_text, dev_text, test_text):
 
     return train_matrix.toarray(), dev_matrix.toarray(), test_matrix.toarray()
 
-
 # Training
 def train(train_matrix, train_target):
-    sentiment_classifier = svm.SVC(gamma='scale')
+    #sentiment_classifier = svm.SVC(C=1 ,kernel='linear')
+    sentiment_classifier = svm.LinearSVC(C=100, tol=0.01, loss='hinge', max_iter=1000000000)
     #sentiment_classifier = GaussianNB()
     #sentiment_classifier = GradientBoostingClassifier(n_estimators=1000, learning_rate=0.1, max_depth = 3, random_state = 0)
+    #sentiment_classifier = SGDClassifier()
+
+    #sentiment_classifier = neighbors.KNeighborsClassifier()
+    
     sentiment_classifier.fit(train_matrix, train_target)
 
     return sentiment_classifier
@@ -104,6 +110,15 @@ def predict(matrix, model):
     prediction = model.predict(matrix)
 
     return prediction
+
+def to_out(ids, tags):
+    with open('out.txt', 'a') as file:
+
+        for i in range(len(ids)):
+            id = ids[i].split('\n')
+            tag = tags[i].split('\n')
+            file.write(id[0]+'\t'+tag[0]+'\n')
+
 
 
 if __name__ == '__main__':
@@ -127,3 +142,8 @@ if __name__ == '__main__':
     print("accuracy = ", accuracy_score(dev_target, out))
     print("macro = ", precision_recall_fscore_support(dev_target, out, average='macro'))
     print("micro = ", precision_recall_fscore_support(dev_target, out, average='micro'))
+
+
+    test_out = predict(test_matrix, model)
+
+    to_out(test_id, test_out)
