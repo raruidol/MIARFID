@@ -1,0 +1,16 @@
+ARF project description.
+
+Team members: Ramon Ruiz Dolz
+
+Title: MINSAIT REAL ESTATE MODELLING
+
+Description: On this work I have created a model to predict time spent on real state website. From a relatively huge amount of data extracted from a real state website, a predictive model has been implemented. In this work I will show a comparative between different techniques and the relevance of feature representation in order to obtain good results. This work has been done inside the context of the Cajamar datathon competition where a challenge is proposed and participants must find the best performing configuration from the given data.
+
+Objectives:
+- Introduce this domain
+- Explain the feature extraction and representation process
+- Compare different machine learning approaches
+- Explain the most important concepts of gradient tree boosting (best performing approach)
+- Conclude with the results obtained
+
+Subset: (work already done since the competition was held in February).
