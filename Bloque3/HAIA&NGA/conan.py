@@ -244,17 +244,13 @@ class conan(object):
 
     def scoreArgs(self, argument_list):
         # an argument is a tuple (agent, text)
-        max_liar = 0
-        for player, value in self.player_map.items():
-            num_lies = len(self.player_map[player]["lies"])
-            if num_lies > max_liar:
-                max_liar = num_lies
+        
         max_score = 0
         bestArg = argument_list[0]
         for argument in argument_list:
             # norm. score based in the number of lies
             if len(self.player_map[argument[0]]["lies"]) > 0:
-                score = len(self.player_map[argument[0]]["lies"])/max_liar
+                score = 1/(len(self.player_map[argument[0]]["lies"])+1)
             else:
                 score = 1
             if score > max_score:
