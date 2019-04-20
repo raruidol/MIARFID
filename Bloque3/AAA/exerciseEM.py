@@ -3,8 +3,8 @@ import scipy as sp
 from matplotlib import pyplot as plt
 import scipy.stats as ss
 
-mu1 = -2
-mu2 = 2
+mu1 = 0
+mu2 = 1
 sigma = 2
 variance = 4
 n_m = 100
@@ -18,13 +18,14 @@ class GMM(object):
 
     def _init(self):
         # init mixture means/sigmas
+        # self.mean_arr = np.asmatrix(np.random.random((self.k, self.n)))
         self.mean_arr = np.asmatrix(np.array([[mu1], [mu2]]))
         self.sigma_arr = np.array([np.asmatrix(np.identity(self.n)) for i in range(self.k)])
-        #self.sigma_arr = np.asmatrix(np.array([[2], [2]]))
+        # self.sigma_arr = np.asmatrix(np.array([[2], [2]]))
         self.phi = np.ones(self.k) / self.k
         self.w = np.asmatrix(np.empty((self.m, self.k), dtype=float))
 
-    def fit(self, tol=0.0001):
+    def fit(self, tol=0.01):
         self._init()
         num_iters = 0
         ll = 1
@@ -80,12 +81,10 @@ class GMM(object):
                 _mu_j += (self.data[i, :] * self.w[i, j])
                 _sigma_j += self.w[i, j] * (
                             (self.data[i, :] - self.mean_arr[j, :]).T * (self.data[i, :] - self.mean_arr[j, :]))
-            self.mean_arr[j] = _mu_j / const
+            #self.mean_arr[j] = _mu_j / const
             self.sigma_arr[j] = _sigma_j / const
 
 p = np.random.randint(0,n_m)
-
-print("Muestras: ", p)
 
 X1 = np.random.multivariate_normal([mu1], [[sigma]], p)
 X2 = np.random.multivariate_normal([mu2], [[sigma]], (n_m-p))
@@ -101,8 +100,10 @@ mean_arr, sigma_arr, params = gmm.fit()
 
 n_components = params.shape[0]
 
+print("Muestras: ", p)
+
 print("Num. Mixturas: ",n_components)
-weights = np.array([params[0], params[1]])
+weights = np.array([1-(p/n_m), p/n_m])
 print("Pesos(priori): ",weights)
 xs = np.linspace(X.min(), X.max(), 500)
 ys = np.zeros_like(xs)
