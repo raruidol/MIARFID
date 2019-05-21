@@ -24,6 +24,8 @@ class conan(object):
         self.role_vector = [] # list of players most probable roles
         self.role = base_info["myRole"]
         self.current_target = None
+        # dictionary of story of the game
+        self.gameDict = {}
         # list of arguments (BECAUSE) stated
         self.arguments = []
         # Target agent of the day
@@ -34,7 +36,7 @@ class conan(object):
         self.updatePlayerMap(base_info)
 
     def getName(self):
-        return self.myname
+        return "VRAIN"
 
     def update(self, base_info, diff_data, request):
         #print("Executing update...")
@@ -66,6 +68,7 @@ class conan(object):
                 t = lie[0]
                 m = lie[1]
                 talk = cb.because(m, cb.vote(t))
+                print('My argument: ', talk)
             else:
                 talk = cb.skip()
 
@@ -77,6 +80,7 @@ class conan(object):
                 t = lie[0]
                 m = lie[1]
                 talk = cb.because(m, cb.vote(t))
+                print('My argument: ', talk)
             else:
                 talk = cb.skip()
 
@@ -189,8 +193,13 @@ class conan(object):
             agent = getattr(row, "agent")
             text = getattr(row, "text")
             t = text.split()
-            if agent != self.id:
-                # Añado argumentos a la lista de argumentos
+
+            if agent == self.id:
+                if "BECAUSE" in text:
+                    self.arguments.append([agent, text])
+
+            elif agent != self.id:
+                # Add arguments to argument list
                 if "BECAUSE" in text:
                     self.arguments.append([agent, text])
 
@@ -207,7 +216,7 @@ class conan(object):
                         else:
                             self.player_map[agent]["lies"].append([agent, text])
 
-                        # Si soy ROL_UNICO y alguien se revela como ROL_UNICO lo añado a la lista de mentirosos
+                        # Si soy ROL_UNICO y alguien se revela como ROL_UNICO lo add a la lista de mentirosos
                         if self.role == "SEER":
                             if "SEER" in t[2]:
                                 self.co_flag = True
@@ -244,12 +253,18 @@ class conan(object):
 
     def scoreArgs(self, argument_list):
         # an argument is a tuple (agent, text)
-        
+
         max_score = 0
         bestArg = argument_list[0]
         for argument in argument_list:
             # norm. score based in the number of lies
-            if len(self.player_map[argument[0]]["lies"]) > 0:
+
+            print(argument)
+
+            if argument[0] == self.id:
+                score = 1.5
+
+            elif len(self.player_map[argument[0]]["lies"]) > 0:
                 score = 1/(len(self.player_map[argument[0]]["lies"])+1)
             else:
                 score = 1
@@ -259,6 +274,9 @@ class conan(object):
                 if "VOTE" in msg[2] or ("ESTIMATE" in msg[2] and "WEREWOLF" in msg[2]):
                     bestArg = argument
 
+
+        print('Winning Argument:', bestArg)
+        print('Score:', max_score)
         return bestArg
 
     def processArgument(self, argument):
